@@ -18,6 +18,11 @@ class ImageDisplayFragment : Fragment() {
 
     private lateinit var images: IntArray
 
+    fun setImages(_images : IntArray) {
+        images = _images
+        (view as RecyclerView).adapter.notifyDataSetChanged()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // If we have arguments
@@ -40,7 +45,7 @@ class ImageDisplayFragment : Fragment() {
         // The recycler view is the root element of the Fragment's layout
         // as such the view argument passed to onViewCreated() is the RecyclerView
         with (view as RecyclerView) {
-            adapter = CustomRecyclerAdapter(images)
+            if (::images.isInitialized) adapter = CustomRecyclerAdapter(images)
             layoutManager = GridLayoutManager(requireContext(), 2)
         }
     }
